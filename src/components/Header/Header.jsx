@@ -12,7 +12,6 @@ const Header = (props) => {
                     ? <div>{props.login} <button onClick={props.logout}>Log out</button></div>
                     : <NavLink to={"/Login"}>Login</NavLink>}   {/*если isAuth тру то первое если фолс то 2 */}
             </div>
-            {/*test comment*/}
         </header>);
 }
 
