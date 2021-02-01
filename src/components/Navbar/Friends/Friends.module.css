@@ -1,0 +1,9 @@
+.header{
+    margin: 5px;
+    padding-left: 10px;
+    /*color: white;*/
+}
+.queueFriends{
+    display: flex;
+    justify-content: space-between;
+}

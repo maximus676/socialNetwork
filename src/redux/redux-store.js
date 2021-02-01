@@ -1,0 +1,27 @@
+import {applyMiddleware, combineReducers, compose, createStore} from "redux";
+import profileReducer from "./profile-reducer";
+import dialogsReducer from "./dialogs-reducer";
+import sidebarReducer from "./sidebar-reducer";
+import usersReducer from "./users-reducer";
+import authReducer from "./auth-reducer";
+import thunkMiddleware from "redux-thunk";   /*нужен для санок  это и есть тот самый промежуточный уровень который мы импортируем */
+import {reducer as formReducer} from "redux-form"
+import appReducer from "./app-reducer";
+
+
+let reducers = combineReducers({          /* это обект у которого значение редьюсоры*/
+    profilePage: profileReducer,
+    dialogsPage: dialogsReducer,
+    sidebar: sidebarReducer,
+    usersPage: usersReducer,
+    auth: authReducer,
+    app: appReducer,
+    form: formReducer,
+});
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;     /*для расширения в браузере  урок 91 */
+const store = createStore(reducers, composeEnhancers(applyMiddleware(thunkMiddleware)));   /*закомбайненые reducers мы отдаем стору //  applyMiddleware -говорит прими промежуточные слои и вкиниться между стором и редьюсором ДЛЯ САНОК  */
+
+window.__store__ = store;
+
+export default store;

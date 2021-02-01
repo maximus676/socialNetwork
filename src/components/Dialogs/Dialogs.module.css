@@ -1,0 +1,29 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 2fr 10fr;
+}
+
+.dialogsItems {
+    padding: 10px;
+}
+
+.massages{
+    padding: 10px;
+}
+
+.send{
+    display: flex;
+}
+.massages__field{
+    margin-right: 20px;
+    width: 560px;
+    border: 4px solid #385dea;
+    border-radius: 10px;
+
+}
+.button__send{
+    border: 4px solid #60ec40;
+    border-radius: 10px;
+    width: 70px;
+    height: 30px;
+}

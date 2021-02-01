@@ -1,0 +1,18 @@
+.nav{
+    grid-area: n;
+    background-color: #1b46e5;
+    padding: 17px;
+}
+.item a{
+    color: white;
+    text-decoration: none;
+}
+.item a.active{
+    color: crimson;
+}
+.fieldFriends{
+    margin-top: 20px;
+    background-color: white;
+    border-radius: 10px;
+    border: 4px solid #85de71
+}
