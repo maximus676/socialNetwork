@@ -1,5 +1,5 @@
 import React from "react";
-import s from "./Paginator.module.css";
+import styles from "./Paginator.module.css";
 /*import cn from "classnames"*/
 
  /* let Paginator = ({totalItemsCount, pageSize, currentPage, onPageChanged, portionSize = 10})
@@ -16,18 +16,18 @@ import s from "./Paginator.module.css";
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1;
     let rightPortionPageNumber = portionNumber * portionSize;
 
-    return <div className={s.paginator}>
+    return <div className={styles.paginator}>
         {portionNumber > 1 &&
         <button onClick={() => { setPortionNumber(portionNumber - 1) }}>PREV</button>}
 
         {pages
             .filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
-            .map(page => {
-                return <span className={cn({
-                    [s.selectedPage]: currentPage === page
-                }, s.pageNumber)}
+            .map((page) => {
+                return <span className={ cn({
+                    [styles.selectedPage]: currentPage === page
+                }, styles.pageNumber)}
                              key={page}
-                             onClick={(event) => {
+                             onClick={(e) => {
                                  onPageChanged(page);
                              }}>{page}</span>
             })}
@@ -49,7 +49,7 @@ let Paginator = (props) => {
 
     return <div>
         { pages.map(page => {
-            return <span className={props.currentPage === page && s.selectedPage}    /*если число нажатой цифры то цифра добавляет класс s.selectedPage*/
+            return <span className={props.currentPage === page && styles.selectedPage}    /*если число нажатой цифры то цифра добавляет класс s.selectedPage*/
                          onClick={(event) => {props.onPageChanged(page);
                          }}>{page}</span>
 

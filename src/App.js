@@ -16,6 +16,7 @@ import {withRouter} from "react-router";
 import {initializAppThunkCreator} from "./redux/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import {withSuspense} from "./hoc/withSuspense";
+import Redirect from "react-router-dom/es/Redirect";
                                                                         /*Lazy ниже */
 /*import DialogsContainer from "./components/Dialogs/DialogsContainer";  вместо вот этого импорта */
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'));
@@ -23,8 +24,17 @@ const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileCo
 
 
 class App extends React.Component {
+    catchAllUnhandleErrors = (reason, promise) => {
+        alert("Some error occured");
+        //console.error(promiseRejectionEvent)
+    }
     componentDidMount(){
         this.props.initializeApp()     /*вызов ThunkCreator //в параметры мы передаем то что нам нужно для обращения к серверу или для моих ActionCreator*/
+        window.addEventListener("unhandledrejection",  this.catchAllUnhandleErrors);
+    };
+
+    componentWillUnmount(){
+        window.removeEventListener("unhandledrejection", this.catchAllUnhandleErrors);
     }
 
     render() {
@@ -37,9 +47,13 @@ class App extends React.Component {
                 <HeaderContainer/>
                 <Navbar/>
                 <div className='app-wrapper-content'>
+                    {/*<Switche>*/}
                     <Route
                         path='/profile/:userId?'        /* :userId  добавляем параметр что бы его отследить для совпадения в withRouter ?- гворит что параметр не обизателен */
                         render={ withSuspense (ProfileContainer)} />
+                    <Route exact         /*  <Route exact path = если я хочу что бы урл совпадал точь в точ */
+                        path='/'        /* :userId  добавляем параметр что бы его отследить для совпадения в withRouter ?- гворит что параметр не обизателен */
+                        render={() => <Redirect to={"/profile"} /> } />
                     <Route
                         path='/dialogs'                            /*  пример дальнейшего пути    to="/dialogs/2"     */
                         render={ withSuspense (DialogsContainer)} />
@@ -49,7 +63,9 @@ class App extends React.Component {
                            render={() => <Login/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
-                    <Route path='/settings' render={() => <Settings/>}/>
+                    <Route path='/settings' render={() => <Settings/>}/>   {/*  <Route exact path = если я хочу что бы урл совпадал точь в точ */}
+                    <Route path='*' render={() => <div>404 NOT FOUND</div>}/>      {/*ЕСЛИ ЕН ОДИН ПУТЬ НЕ УСТРАИВАЕТ ТО 404*/}
+                   {/* </Switche>*/}
                 </div>
             </div>
         );
