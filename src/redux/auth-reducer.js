@@ -18,6 +18,8 @@ const authReducer = (state = initialState, action) => {
             };
         case "GET-CAPTCHA-URL-SUCCESS":
             return { ...state, captchaUrl: action.captchaUrl};
+        case "DELETE-CAPTCHA":
+            return {...state, captchaUrl: action.captchaUrl}
 
         default:
             return state;
@@ -27,6 +29,7 @@ const authReducer = (state = initialState, action) => {
 export const setAuthUserDataActionCreator = (id, email, login, isAuth) => ({type: "/auth/SET-USER-DATA",
                                             payload: {id, email, login, isAuth}});
 export const getCaptchaUrlSuccessActionCreator = (captchaUrl) => ({type: "GET-CAPTCHA-URL-SUCCESS", captchaUrl });
+export const deleteCaptchaActionCreator = (captchaUrl) => ({type: "DELETE-CAPTCHA", captchaUrl})
 
 export const getAuthUserDataThunkCreator = () => async (dispatch) => {   //ThunkCreator   принемает параметры  и передает их в санку   // async (dispatch) =>  санка  Thunk
     const data = await usersAPI.getHeader();
@@ -40,13 +43,17 @@ export const loginThunkCreator = (email, password, rememberMe, captcha) => async
     const data = await profileAPI.login(email, password, rememberMe, captcha);
     if (data.data.resultCode === 0) {     /*приходит ответ есть ли ошибкаа или нет 0 это нет ошибок */
         dispatch(getAuthUserDataThunkCreator())
-
+        dispatch(deleteCaptchaActionCreator(null))
     } else {
+        /*debugger;*/
+        if(data.data.resultCode !== 10){
+            dispatch(deleteCaptchaActionCreator(null))
+        }
         if(data.data.resultCode === 10){
             dispatch(getCaptchaUrlThunkCreator());
         }
         let message = data.data.messages.length > 0 ? data.data.messages[0] : "Some error";   /*resultCode если придет не ноль то в нем будет сидеть массив с ошибками */
-        dispatch(stopSubmit("loginnn", {_error: message})); /* stopSubmit говорит что хотим прекратить сабмит формы // loginnn из reduxForm({form: "loginnn"}) вторям параметром проблемное поле // или вписываем свойство _error форма получает общую ошибку и валидейты срабатывают у всех полей формы  */
+        dispatch(stopSubmit("loginnn", {_error: message})); /* stopSubmit говорит что хотим прекратить сабмит формы // loginnn из reduxForm({form: "loginnn"}) вторым параметром проблемное поле // или вписываем свойство _error форма получает общую ошибку и валидейты срабатывают у всех полей формы  */
     }
 }
 

@@ -3,7 +3,7 @@ import s from "./ProfileInfo.module.css";
 
 /*let arr = [0, () => {}];
 let [a, setA] = arr;     а = 0, setA= функции  */
-
+/*let [status, setStatus] = useState(props.status);   status- по началу устанавливается значение пришедшее со стейта прокинутое в пропсах useState(props.status)  setStatus- а тут мы прописываем функцию что должно заменить пришедший стейт на новый и после отработки ее наш  status уже изменен на новое значение*/
 const ProfileStatusWithHooks = (props) => {
 
     let [editMode, setEditMode] = useState(false); /*значение useState изначально false*/  /*useState возращает нам масив и в нем сидят два элемента 1 значение само значение стейта  и мы его записали как false 2 значение  функция которая устанавливает значение стейта  */

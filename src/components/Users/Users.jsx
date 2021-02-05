@@ -3,7 +3,7 @@ import s from "./Users.module.css";
 import userPhoto from "../Icons/images.png";
 import {NavLink} from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
-import {followThunkCreator, unfollowThunkCreator} from "../../redux/users-reducer";
+
 
 
 let Users = (props) => {
@@ -15,10 +15,12 @@ let Users = (props) => {
         pages.push(i);
     }*/
     return  <div>
+         <div className={s.paginator}>
+             <Paginator currentPage={props.currentPage} onPageChanged={props.onPageChanged}
+                        totalUsersCount={props.totalUsersCount} pageSize={props.pageSize}
+                        portionSize={props.portionSize} className={s.selectedPages}  />
+         </div>
 
-        <Paginator currentPage = {props.currentPage} onPageChanged = {props.onPageChanged}
-                   totalItemsCount = {props.totalItemsCount}  pageSize = {props.pageSize}
-                   /*portionSize = {props.portionSize }*/ className={s.selectedPages}/>
        {/*  ^ вместо кода вставленого в конце компаненты  ^ */}
         {
             props.users.map(user => <div key = {user.id}>

@@ -11,4 +11,10 @@
     cursor: pointer;
 }
 
-
+.bas{
+    cursor: pointer;
+}
+.paginator{
+    margin-top: 15px;
+    margin-bottom: 20px;
+}

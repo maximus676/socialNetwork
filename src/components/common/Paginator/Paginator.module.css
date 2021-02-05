@@ -11,3 +11,21 @@
     cursor: pointer;
     border-color: black;
 }
+.pageNavigator{
+    color: #09e20f;
+}
+.a[disabled]{
+    color: #09e20f;
+}
+
+.ant-pagination-item a {
+    color:red;
+}
+
+.test {
+    color: red;
+}
+
+.ant-pagination-item {
+    background-color: red;
+}
