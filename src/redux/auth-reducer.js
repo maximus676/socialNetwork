@@ -45,10 +45,6 @@ export const loginThunkCreator = (email, password, rememberMe, captcha) => async
         dispatch(getAuthUserDataThunkCreator())
         dispatch(deleteCaptchaActionCreator(null))
     } else {
-        /*debugger;*/
-        if(data.data.resultCode !== 10){
-            dispatch(deleteCaptchaActionCreator(null))
-        }
         if(data.data.resultCode === 10){
             dispatch(getCaptchaUrlThunkCreator());
         }

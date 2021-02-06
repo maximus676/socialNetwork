@@ -8,7 +8,7 @@ let  initialState =  {  /* инициалтзационный стейт кот�
     isFetching: true,       /* БУЛЕВОЕ ЗНАЧЕНИЕ КРУТЁЛКИ */
     followingInProgress: [],   /*булевое значение отмены работы кнопки */
     fake: 10,
-    /*portionSize: 10,*/
+
 };
 
 const usersReducer = (state = initialState, action) => {

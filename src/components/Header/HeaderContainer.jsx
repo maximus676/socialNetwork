@@ -3,6 +3,7 @@ import Header from "./Header";
 import { logoutThunkCreator} from "../../redux/auth-reducer";
 import {connect} from "react-redux";
 
+/*
 class HeaderContainer extends React.Component {
 
     render () {
@@ -24,3 +25,4 @@ let mapStateToProps = (state) => {
 export default connect(mapStateToProps, {
     logout: logoutThunkCreator,
 }) (HeaderContainer);
+*/

@@ -13,9 +13,10 @@ import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 class ProfileContainer extends React.Component {
 
-   /* shouldComponentUpdate(nextProps, nextState,) {
+    shouldComponentUpdate(nextProps, nextState, nextContext) {
+        console.log("this", this.props, "next", nextProps )
         return nextProps !== this.props || nextState !== this.state;
-    }*/
+    }
 
     refreshProfile(){
         let userId = this.props.match.params.userId   /*записываем параметр соответствия из Route*/  /*эти пропсы записываются автоматически из withRouter они обволакивают компаненту ProfileContainer*/
