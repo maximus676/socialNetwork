@@ -5,7 +5,6 @@ import AddPostForm from "./AddPostForm/AddPostForm";
 
 const MyPosts = React.memo (props => { /*стрелочная функция с хоком .memo которя проверяет компоненту и если она вернет  такой же jsx то не перерисовывать ее*/
 
-    console.log("YO");
 
     let PostsElements = props.PostData.map(post => <Post message={post.massage} likeCount={post.likeCount}
                                                          key={post.id} id={post.id}/>);   /* key={post.id} просто что бы не выскакивало ошибки */

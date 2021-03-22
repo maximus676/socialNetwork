@@ -3,10 +3,20 @@ import s from "./Users.module.css";
 import userPhoto from "../Icons/images.png";
 import {NavLink} from "react-router-dom";
 import Paginator from "../common/Paginator/Paginator";
+import {UsersType} from "../../types/types";
 
+type PropsType = {
+    totalUsersCount: number
+    pageSize: number
+   /* currentPage: number*/
+    users: Array<UsersType>
+    onPageChanged: (page: number) => void
+    followThunkCreator:(userId: number) => void
+    unfollowThunkCreator:(userId: number) => void
+    followingInProgress: Array<number>
+}
 
-
-let Users = (props) => {
+let Users: React.FC<PropsType> = (props) => {
 
   /*  let pagesCount = Math.ceil(props.totalUsersCount / props.pageSize); /!*Math.ceil - округляет полученое число до целого в большую сторону *!/
 
@@ -16,9 +26,8 @@ let Users = (props) => {
     }*/
     return  <div>
          <div className={s.paginator}>
-             <Paginator currentPage={props.currentPage} onPageChanged={props.onPageChanged}
-                        totalUsersCount={props.totalUsersCount} pageSize={props.pageSize}
-                        portionSize={props.portionSize} className={s.selectedPages}  />
+             <Paginator  onPageChanged={props.onPageChanged}
+                        totalUsersCount={props.totalUsersCount} pageSize={props.pageSize}/>
          </div>
 
        {/*  ^ вместо кода вставленого в конце компаненты  ^ */}

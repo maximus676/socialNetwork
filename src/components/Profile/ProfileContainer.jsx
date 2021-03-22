@@ -39,7 +39,7 @@ class ProfileContainer extends React.Component {
     }
 
     componentDidUpdate (prevProps, prevState, snapshot){   /* компанента жизненого цикла сравнивает изменения и если они есть то она перерисовывается*/
-        if(this.props.match.params.userId != prevProps.match.params.userId){   /*если айдишка из пришедших пропсов не ровна предыдушему айди то*/
+        if(this.props.match.params.userId !== prevProps.match.params.userId){   /*если айдишка из пришедших пропсов не ровна предыдушему айди то*/
             this.refreshProfile();
         }
     }

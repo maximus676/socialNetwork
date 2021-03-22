@@ -1,7 +1,12 @@
 import React from "react";
 import s from "./Massage.module.css";
 
-const Massage = (props) =>{
+type PropsType = {
+    massage: string
+    id: number
+}
+
+const Massage: React.FC <PropsType>  = (props) =>{
 
     return(
         <div>

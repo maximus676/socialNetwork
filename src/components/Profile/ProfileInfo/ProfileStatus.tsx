@@ -1,8 +1,17 @@
-import React from "react";
+import React, {ChangeEvent} from "react";
 import s from "./ProfileInfo.module.css";
 
+type PropsType = {
+    status: string
 
-class ProfileStatus extends React.Component{
+    updateStatus:(newStatus:string) => void
+}
+type StateType = {
+    editMode: boolean
+    status: string
+}
+
+class ProfileStatus extends React.Component <PropsType, StateType>{
     state = {                   /* local state*/
         editMode: false,
         status: this.props.status,
@@ -20,12 +29,12 @@ class ProfileStatus extends React.Component{
         })
         this.props.updateStatus(this.state.status);   /* санка */
     }
-    onStatusChange = (e) => {
+    onStatusChange = (e: ChangeEvent<HTMLInputElement>) => {     // тепезируем евент описывваем его метотд onChange и где он прописан в интпуте
         this.setState({
             status: e.currentTarget.value         /*currentTarget ?????????*/
         });
     }
-    componentDidUpdate (prevProps, prevState) {  /*componentDidUpdate не вызывается при первом render вызывается каждый раз когда компонента изменяется и отрисовывается заново */
+    componentDidUpdate (prevProps: PropsType, prevState: StateType) {  /*componentDidUpdate не вызывается при первом render вызывается каждый раз когда компонента изменяется и отрисовывается заново */
         if(prevProps.status !== this.props.status){            /* если  у нас в предыдущих пропсах prevProps статус который был не равен статусу в текущих пропсах тогда выполни перезатерание статуса */
             this.setState({
                 status: this.props.status

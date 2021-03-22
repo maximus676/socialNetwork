@@ -11,64 +11,67 @@ import {compose} from "redux";
 import {
     getCurrentPage,
     getFollowingInProgress,
-    getIsFetching,
-    getPageSize, getPortionSize,
-    getTotalUsersCount,
-    getUsersSelector, getUsersSuperSelector
+    getIsFetching, getPageSize,
+    getTotalUsersCount, getUsersSuperSelector
 } from "../../redux/users-selectors";
+import {UsersType} from "../../types/types";
+import {AppStateType} from "../../redux/redux-store";
+
+type MapStatePropsType = {
+    currentPage: number
+    pageSize: number
+    isFetching: boolean
+    totalUsersCount: number
+    users: Array <UsersType>
+    followingInProgress: Array<number>
+}
+type MapDispatchPropsType = {
+    requestUsers: (currentPage: number, pageSize: number) => void
+    followThunkCreator: (userId: number) => void
+    unfollowThunkCreator: (userId: number) => void
+}
+type OwnPropsType = {     // пропсы на прямую
+    pageTitle: string
+}
 
 
+type PropsType = MapStatePropsType & MapDispatchPropsType & OwnPropsType // разбиваем приходящие значения на 3 типа 1 приходящий стейт 2 диспатчи 3 перяданые пропсы на прямую
 
-
-
-class UsersContainer extends React.Component {            /* классовая компонента*/
+class UsersContainer extends React.Component <PropsType> {            /* классовая компонента*/    //описание типов в классовой компаненте PropsType и StateType но  StateType описание для локального стейта и тут он нам не нужен
 
     componentDidMount() {      /*метод для всех сайт эфектов и вызывается один раз в отличии от жизни объекта */
         this.props.requestUsers(this.props.currentPage, this.props.pageSize);
     }
 
-    onPageChanged = (pageNumber) => {           /*pageNumber нажатое число страницы */
+    onPageChanged = (pageNumber: number) => {           /*pageNumber нажатое число страницы */
         this.props.requestUsers(pageNumber, this.props.pageSize);     /*вызов ThunkCreator //в параметры мы передаем то что нам нужно для обращения к серверу или для моих ActionCreator*/
-             /* ^ все спрятоно это в санке ^ */
-       /* this.props.setCurrentPage(pageNumber);  /!* отрисовываем нажатую цифру  *!/
-        this.props.toggleIsFetching(true);             /!*крутёлка*!/
 
-        usersAPI.getUsers(pageNumber, this.props.pageSize) .then(data => {      /!*getUsers() иой  запрос API из DAL уровня *!/
-            this.props.toggleIsFetching(false);/!*полсе ответа сервера передает значение false и крутилка откоючается *!/
-            this.prop,,s.setUsers(data.items);      /!*запрашиваем все данные пользователей определенного отрезка пользователей  но тут мы выбираем определенный отрезок по номеру нажатой цифры page=${pageNumber}*!/
-        });*/
     }
     render() {
-        console.log("USERS")
         return<>
+            <h2>{this.props.pageTitle}</h2>
             {this.props.isFetching ? <Preloader /> : null}      {/* смотрит в onPageChanged на значения true или false*/}
             <Users totalUsersCount={this.props.totalUsersCount}
                       pageSize={this.props.pageSize}
-                      currentPage={this.props.currentPage}
                       users={this.props.users}
                       onPageChanged={this.onPageChanged}
                       followThunkCreator={this.props.followThunkCreator}
                       unfollowThunkCreator={this.props.unfollowThunkCreator}
                       followingInProgress={this.props.followingInProgress}
-                     /* portionSize = {this.props.portionSize}*/
-
             />
         </>
     }
 }
 
-let mapStateToProps = (state) => {
-    console.log("mapStateToProps USERS")
+let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return{
        /* users:getUsersSelector (state),*/  /*пример работы реселекта и просто селектора ниже реселектор имеют свою логику и может анализировать стоит ли перезапускать функцию или нет */
         users:getUsersSuperSelector (state), /* он принемает стейт но в нутри идет сравнение зависимостей и есть ли какой то ответ в памити  и только потом если нужно перезапусти функцию и нам вернется новый массив */
-        /*users: getUsers(state),*/
         pageSize: getPageSize(state),
         totalUsersCount: getTotalUsersCount(state),
-        currentPage: getCurrentPage(state),
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
-       /* portionSize: getPortionSize(state),*/
+        currentPage: getCurrentPage(state)
     }
 }
 
@@ -95,13 +98,13 @@ let mapStateToProps = (state) => {
     }
 }*/
 
-export default compose(
-    connect (mapStateToProps, {
-    setCurrentPage: setCurrentPageActionCreator,
+export default compose <React.ComponentType>(
+    connect <MapStatePropsType, MapDispatchPropsType, OwnPropsType, AppStateType> (
+        mapStateToProps, {      //AppStateType тип глобального стейта
     requestUsers: requestUsersThunkCreator,
     followThunkCreator:followThunkCreator,
     unfollowThunkCreator:unfollowThunkCreator,
 }),
     // withAuthRedirect        /* сначала закидыввает  UsersContainer в withAuthRedirect а потом получиный результат в выше в connect*/     /* withAuthRedirect это HOC и в нее мы предаем целевую компоненту UsersContainer и к нам возращается новая классовая компанента после обработки */
-)(UsersContainer);
+)(UsersContainer)
 

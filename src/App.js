@@ -23,6 +23,8 @@ import "antd/dist/antd.css";
 import {Layout, Menu, Breadcrumb, Col, Row,} from 'antd';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
 import { Avatar, Image } from 'antd';
+import FriendsContainer from "./components/Navbar/Friends/FriendsContainer";
+import s from "./components/Navbar/Navbar.module.css";
 
 
 
@@ -47,7 +49,7 @@ class App extends React.Component {
         window.addEventListener("unhandledrejection",  this.catchAllUnhandleErrors);
     };
 
-    componentWillUnmount(){
+    componentWillUnmount(){      /*компанета жизненого цикла срабатывает при удалении компаненты */
         window.removeEventListener("unhandledrejection", this.catchAllUnhandleErrors);
     }
 
@@ -107,6 +109,9 @@ class App extends React.Component {
                                     <Menu.Item key="11">option11</Menu.Item>
                                     <Menu.Item key="12">option12</Menu.Item>
                                 </SubMenu>
+                                <div className={s.fieldFriends}>
+                                    <FriendsContainer />
+                                </div>
                             </Menu>
                         </Sider>
                         <Content style={{ padding: '0 24px', minHeight: 280 }}>
@@ -120,7 +125,7 @@ class App extends React.Component {
                                 <Route path='/dialogs'                              /*пример дальнейшего пути    to="/dialogs/2"   */
                                     render={ withSuspense (DialogsContainer)} />
                                 <Route path='/users'                                    /*^ withSuspense хок с обозначением логики lazy загрузки  ^*/
-                                    render={() => <UsersContainer/>}/>
+                                    render={() => <UsersContainer pageTitle={"Самурай"} />}/>
                                 <Route path='/login' render={() => <Login/>}/>
                                 <Route path='/news' render={() => <News/>}/>
                                 <Route path='/music' render={() => <Music/>}/>

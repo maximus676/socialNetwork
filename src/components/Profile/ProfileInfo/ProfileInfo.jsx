@@ -2,7 +2,6 @@ import React, {useState} from "react";
 import s from "./ProfileInfo.module.css";
 import Preloader from "../../common/Preloader/Preloader";
 import userPhoto from "../../Icons/images.png";
-import ProfileStatus from "./ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatusWithHooks";
 import ProfileDataForm from "./ProfileDataForm";
 
@@ -16,6 +15,7 @@ const ProfileInfo = (props) => {
     /* как status может прийти быстрее если у нас ещё не пришел profile и показался <Preloader /> а статус приходит в <ProfileStatus */
 
     const onMainPhotoSelected = (e) => {
+        console.log(e.target.files)
         if (e.target.files[0]) {
             props.savePhoto(e.target.files[0]);
         }

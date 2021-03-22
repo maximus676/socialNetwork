@@ -1,11 +1,16 @@
 import React, {useState} from "react";
 import styles from "./Paginator.module.css";
-import cn from "classnames"
 import "antd/dist/antd.css";
 import {Button, Pagination} from 'antd';
 
 
-function itemRender(current, type, originalElement) {
+type PropsType = {
+    totalUsersCount: number
+    pageSize: number
+    onPageChanged: (page: number) => void    //Void говорит о том что функция ничего не возвращает
+}
+
+function itemRender(current: number, type: string, originalElement: any) {
   if (type === 'prev') {
     return <a className={styles.pageNavigator}>Previous</a>;
   }
@@ -15,7 +20,7 @@ function itemRender(current, type, originalElement) {
   return originalElement;
 }
 
-const Paginator = ({totalUsersCount, pageSize, onPageChanged}) =>{
+const Paginator: React.FC<PropsType> = ({totalUsersCount, pageSize, onPageChanged}) =>{
 
     let pagesCount = Math.ceil(totalUsersCount / pageSize); /*Math.ceil - округляет полученое число до целого в большую сторону */
 
@@ -26,6 +31,38 @@ const Paginator = ({totalUsersCount, pageSize, onPageChanged}) =>{
                        showSizeChanger = {false} itemRender={itemRender}/></div>  /*showSizeChanger = {false} - отключает выподающий список */
         )
 }
+
+
+
+
+
+/*
+function itemRender(current, type, originalElement) {
+    if (type === 'prev') {
+        return <a className={styles.pageNavigator}>Previous</a>;
+    }
+    if (type === 'next') {
+        return <a className={styles.pageNavigator}>Next</a>;
+    }
+    return originalElement;
+}
+
+const Paginator = ({totalUsersCount, pageSize, onPageChanged}) =>{
+
+    let pagesCount = Math.ceil(totalUsersCount / pageSize); /!*Math.ceil - округляет полученое число до целого в большую сторону *!/
+
+    return (
+        <div className={styles.test}>
+            <Pagination onChange={(page) =>{onPageChanged(page)}}       /!* page приходит из под капота анта мы получаем нажатую страницу и передаем ее функции изменения  onPageChanged*!/
+                        total={pagesCount} defaultPageSize = {1} showQuickJumper  /!*total={pagesCount} - анту передаю что бы он знал колво страниц / defaultPageSize = {1} для того xnj  для того что бы не делил кколво страниц на 10 / showQuickJumper- включаем Go to   *!/
+                        showSizeChanger = {false} itemRender={itemRender}/></div>  /!*showSizeChanger = {false} - отключает выподающий список *!/
+    )
+}
+*/
+
+
+
+
 
 
 /*export let Paginator = ({totalUsersCount, pageSize, currentPage, onPageChanged, portionSize = 10}) =>{
