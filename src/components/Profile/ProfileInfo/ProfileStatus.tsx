@@ -24,7 +24,7 @@ class ProfileStatus extends React.Component <PropsType, StateType>{
     }
 
     deactivateEditMode = () => {
-        this.setState({/*метод  из React.Component который позволяет пересовать State и в setState мы записываем те свойства которые мы должны преезаписать*/
+        this.setState({/*метод  из React.Component который позволяет пересовать локальный стейт State (в ванной компаненте) и в setState мы записываем те свойства которые мы должны преезаписать*/
             editMode: false,           /*перезатераем  editMode*/
         })
         this.props.updateStatus(this.state.status);   /* санка */

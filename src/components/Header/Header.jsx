@@ -38,7 +38,7 @@ export const Header = (props) => {
                         <Avatar alt={login || ""} style={{ backgroundColor: '#87d068' }} icon={<UserOutlined />} />
                         </Col>
                         <Col span={5}>
-                        <div>{login}<Button type="primary" icon={<PoweroffOutlined />}
+                        <div style={{ color: '#fff'}}>{login}<Button type="primary" icon={<PoweroffOutlined />} style={{marginLeft: '10px'}}
                                  onClick={logoutCallback}> Log out!</Button></div>
                         </Col>
                         </>

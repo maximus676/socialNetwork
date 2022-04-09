@@ -1,5 +1,5 @@
 
-export const required = value => {
+export const required = value => {  // value приходит из validate который прописывается в Field формы
     if(value) {
         return undefined;
     }
@@ -14,7 +14,7 @@ export const maxLengthThunkCreator = (maxLength) => (value) => {      /* сан�
 }
 
 export const maxLength30 = value => {
-    if(value>30) {
+    if(value.length>30) {
         return "Max Length is 30 symbols ";
     }
     return undefined;
